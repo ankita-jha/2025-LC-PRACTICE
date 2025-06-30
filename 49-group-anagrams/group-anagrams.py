@@ -1,16 +1,12 @@
+from collections import defaultdict
 class Solution:
     def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
-        hmap={}
-        for i in strs:
-            word=''.join(sorted(i))
-            if word not in hmap:
-                hmap[word]=[i]
-            else:
-                hmap[word].append(i)
-        print(hmap)
-        # return all the values
-        output=[]
-        for key in hmap.keys():
-            output.append(hmap[key])
-        print(output)
-        return output
+        hmap=defaultdict(list)
+        for word in strs:
+            count = [0]*26
+            for ch in word:
+                index=ord(ch)-ord('a')
+                count[index]+=1
+            key=tuple(count)
+            hmap[key].append(word)
+        return list(hmap.values())
